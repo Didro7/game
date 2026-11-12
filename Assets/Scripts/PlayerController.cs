@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class PlayerController2D : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 11f;
@@ -11,6 +11,8 @@ public class PlayerController2D : MonoBehaviour
 
     private Rigidbody2D rb;
     private float moveDirection;
+
+    private float keyboardDirection;
 
     private void Awake()
     {
@@ -22,19 +24,46 @@ public class PlayerController2D : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        keyboardDirection = 0f;
+
+        if (Input.GetKey(KeyCode.A) ||
+            Input.GetKey(KeyCode.LeftArrow))
+        {
+            keyboardDirection -= 1f;
+        }
+
+        if (Input.GetKey(KeyCode.D) ||
+            Input.GetKey(KeyCode.RightArrow))
+        {
+            keyboardDirection += 1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) ||
+            Input.GetKeyDown(KeyCode.W) ||
+            Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            Jump();
+        }
+    }
+
     private void FixedUpdate()
     {
+        float horizontalInput = keyboardDirection != 0f
+            ? keyboardDirection
+            : moveDirection;
+
         rb.linearVelocity = new Vector2(
-            moveDirection * moveSpeed,
+            horizontalInput * moveSpeed,
             rb.linearVelocity.y
         );
 
-        // Разворачиваем только спрайт, а не Player
         if (playerSprite != null)
         {
-            if (moveDirection < 0f)
+            if (horizontalInput < 0f)
                 playerSprite.flipX = true;
-            else if (moveDirection > 0f)
+            else if (horizontalInput > 0f)
                 playerSprite.flipX = false;
         }
     }
