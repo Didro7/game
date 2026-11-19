@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df92a95c90cee494a972d4a7384b57fd, type: 3}
+  m_Name: Level_01
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelNumber: 1
+  timeLimit: 30
+  goal: 0
+  goalAmount: 0
+  environmentPrefab: {fileID: 6197407112425925409, guid: 93dc0972778757e479316c49a843cb1c, type: 3}
+  playerSpawnPoint: {x: -5.43, y: -2.6}
+  exitPosition: {x: 19.63, y: -3.13}
+  spawnPoints:
+  - {x: 5.8, y: -3}
+  waves:
+  - enemyPrefab: {fileID: 6220756438198625401, guid: 46aa89f3c4c678f449595e77950435d1, type: 3}
+    count: 1
+    delay: 0

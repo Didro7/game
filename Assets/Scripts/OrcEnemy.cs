@@ -24,21 +24,21 @@ public class OrcEnemy : MonoBehaviour
     [SerializeField] private Sprite[] walkFrames;
     [SerializeField] private Sprite attackSprite;
     [SerializeField] private Sprite hurtSprite;
-    [SerializeField] private float animationSpeed = 6f;
     [SerializeField] private bool artFacesRight = true;
 
-    [Header("Detection")]
-    [SerializeField] private float detectionRange = 5f;
-    [SerializeField] private float detectionHeight = 1.2f;
 
-    [Header("Attack")]
-    [SerializeField] private float windUpTime = 0.7f;
-    [SerializeField] private float dashSpeed = 8f;
-    [SerializeField] private float dashDuration = 0.4f;
-    [SerializeField] private float stunTime = 0.8f;
-    [SerializeField] private float cooldownTime = 1.5f;
-    [SerializeField] private float edgeMargin = 0.2f;
-    [SerializeField] private int damage = 1;
+    [Header("Enemy Data")]
+    [SerializeField] private EnemyStats stats;
+    private float detectionRange => stats.detectionRange;
+    private float detectionHeight => stats.detectionHeight;
+    private float windUpTime => stats.windUpTime;
+    private float dashSpeed => stats.dashSpeed;
+    private float dashDuration => stats.dashDuration;
+    private float stunTime => stats.stunTime;
+    private float cooldownTime => stats.cooldownTime;
+    private float edgeMargin => stats.edgeMargin;
+    private int damage => stats.damage;
+    private float animationSpeed => stats.animationSpeed;
 
     private Rigidbody2D rb;
     private State currentState;
@@ -48,6 +48,14 @@ public class OrcEnemy : MonoBehaviour
 
     private void Awake()
     {
+
+        if (stats == null)
+        {
+            Debug.LogError("Orc Stats is not assigned!", this);
+            enabled = false;
+            return;
+        }
+
         rb = GetComponent<Rigidbody2D>();
 
         if (spriteRenderer != null)
@@ -264,4 +272,10 @@ public class OrcEnemy : MonoBehaviour
         if (nextSprite != null)
             spriteRenderer.sprite = nextSprite;
     }
+
+    public void SetPlayer(Transform target)
+    {
+        player = target;
+    }
+
 }

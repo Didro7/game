@@ -5,10 +5,15 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
-{
-    [Header("Health")]
-    [SerializeField] private int maxHealth = 3;
-    [SerializeField] private float invincibilityTime = 1f;
+{   
+
+    
+[Header("Player Data")]
+[SerializeField] private PlayerStats stats;
+
+private int maxHealth => stats.maxHealth;
+private float invincibilityTime => stats.invincibilityTime;
+private float flashInterval => stats.flashInterval;
 
     [Header("Hearts UI")]
     [SerializeField] private Image[] hearts;
@@ -17,7 +22,6 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Player Visual")]
     [SerializeField] private SpriteRenderer playerSprite;
-    [SerializeField] private float flashInterval = 0.1f;
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameOverPanel;
@@ -31,6 +35,17 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
+        if (stats == null)
+        {
+            Debug.LogError(
+                "Player Stats is not assigned!",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
         currentHealth = maxHealth;
 
         if (playerSprite != null)

@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 11f;
+
+    [Header("Player Data")]
+    [SerializeField] private PlayerStats stats;
+
+    private float moveSpeed => stats.moveSpeed;
+    private float jumpForce => stats.jumpForce;
+
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private SpriteRenderer playerSprite;
@@ -16,6 +21,18 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+
+        if (stats == null)
+        {
+            Debug.LogError(
+                "Player Stats is not assigned!",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
         rb = GetComponent<Rigidbody2D>();
 
         if (playerSprite == null)

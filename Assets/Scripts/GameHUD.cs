@@ -18,7 +18,7 @@ public class GameHUD : MonoBehaviour
 
     public void AddCoin()
     {
-        coins++;
+        coins += 1;
         UpdateUI();
     }
 

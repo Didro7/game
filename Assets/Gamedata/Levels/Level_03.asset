@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df92a95c90cee494a972d4a7384b57fd, type: 3}
+  m_Name: Level_03
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelNumber: 3
+  timeLimit: 60
+  goal: 0
+  goalAmount: 0
+  environmentPrefab: {fileID: 0}
+  playerSpawnPoint: {x: 0, y: 0}
+  spawnPoints:
+  - {x: 5.8, y: -1}
+  - {x: 11, y: -1}
+  - {x: 11, y: -4}
+  - {x: 2, y: -1}
+  - {x: 5, y: -1}
+  waves:
+  - enemyPrefab: {fileID: 6220756438198625401, guid: 46aa89f3c4c678f449595e77950435d1, type: 3}
+    count: 1
+    delay: 0
+  - enemyPrefab: {fileID: 2808235286246188635, guid: 997089afefc84fe46a94d408b13b6d3f, type: 3}
+    count: 1
+    delay: 0
+  - enemyPrefab: {fileID: 4161632741027748269, guid: 04ec9c715e00f63429e22dbb278ea948, type: 3}
+    count: 1
+    delay: 0
+  - enemyPrefab: {fileID: 6220756438198625401, guid: 46aa89f3c4c678f449595e77950435d1, type: 3}
+    count: 1
+    delay: 0
+  - enemyPrefab: {fileID: 2808235286246188635, guid: 997089afefc84fe46a94d408b13b6d3f, type: 3}
+    count: 1
+    delay: 0

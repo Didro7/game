@@ -23,27 +23,27 @@ public class GoblinPatrol : MonoBehaviour
     [SerializeField] private Sprite idleSprite;
     [SerializeField] private Sprite[] walkFrames;
     [SerializeField] private Sprite attackSprite;
-    [SerializeField] private float framesPerSecond = 6f;
     [SerializeField] private bool artFacesRight = true;
 
-    [Header("Movement")]
-    [SerializeField] private float speed = 1.5f;
-    [SerializeField] private float chaseSpeed = 2.3f;
-    [SerializeField] private float edgeMargin = 0.1f;
-    [SerializeField] private float stopDistance = 0.15f;
 
-    [Header("Vision")]
-    [SerializeField] private float viewRange = 5f;
-    [SerializeField] private float viewAngle = 120f;
-    [SerializeField] private float sightInterval = 0.15f;
-    [SerializeField] private float loseTime = 1.5f;
 
-    [Header("Attack")]
-    [SerializeField] private float attackRange = 1.2f;
-    [SerializeField] private float attackHeight = 1f;
-    [SerializeField] private float windUpTime = 0.6f;
-    [SerializeField] private float cooldownTime = 1.2f;
-    [SerializeField] private int damage = 1;
+
+    [Header("Enemy Data")]
+    [SerializeField] private EnemyStats stats;
+    private float speed => stats.patrolSpeed;
+    private float chaseSpeed => stats.chaseSpeed;
+    private float edgeMargin => stats.edgeMargin;
+    private float stopDistance => stats.stopDistance;
+    private float viewRange => stats.viewRange;
+    private float viewAngle => stats.viewAngle;
+    private float sightInterval => stats.sightInterval;
+    private float loseTime => stats.loseTime;
+    private float attackRange => stats.attackRange;
+    private float attackHeight => stats.attackHeight;
+    private float windUpTime => stats.windUpTime;
+    private float cooldownTime => stats.cooldownTime;
+    private int damage => stats.damage;
+    private float framesPerSecond => stats.framesPerSecond;
 
     private Rigidbody2D rb;
     private State currentState;
@@ -60,6 +60,14 @@ public class GoblinPatrol : MonoBehaviour
 
     private void Awake()
     {
+
+        if (stats == null)
+        {
+            Debug.LogError("Goblin Stats is not assigned!", this);
+            enabled = false;
+            return;
+        }
+
         rb = GetComponent<Rigidbody2D>();
 
         if (spriteRenderer != null)
@@ -122,21 +130,36 @@ public class GoblinPatrol : MonoBehaviour
 
                 if (stateTimer >= windUpTime)
                 {
-                    if (IsNearPlayer() &&
-                        IsOnScreen() &&
-                        CanSeePlayer())
+                    if (player != null && IsNearPlayer())
                     {
                         PlayerHealth health =
                             player.GetComponent<PlayerHealth>();
 
+                        if (health == null)
+                            health = player.GetComponentInParent<PlayerHealth>();
+
+                        if (health == null)
+                            health = player.GetComponentInChildren<PlayerHealth>(true);
+
                         if (health != null)
+                        {
                             health.TakeDamage(damage);
+                            Debug.Log("Goblin called TakeDamage!");
+                        }
+                        else
+                        {
+                            Debug.LogWarning(
+                                "PlayerHealth not found in Player hierarchy!"
+                            );
+                        }
+
                     }
 
                     ChangeState(State.Cooldown);
                 }
 
                 break;
+
 
             case State.Cooldown:
 
@@ -225,13 +248,14 @@ public class GoblinPatrol : MonoBehaviour
             horizontalVelocity,
             rb.linearVelocity.y
         );
-
         if (spriteRenderer != null)
         {
             spriteRenderer.flipX = artFacesRight
                 ? !movingRight
                 : movingRight;
         }
+
+
     }
 
     private bool CanSeePlayer()
@@ -340,4 +364,11 @@ public class GoblinPatrol : MonoBehaviour
         if (nextSprite != null)
             spriteRenderer.sprite = nextSprite;
     }
+
+    public void SetPlayer(Transform target)
+    {
+        player = target;
+        Debug.Log("Goblin Player assigned: " + target.name);
+    }
+
 }

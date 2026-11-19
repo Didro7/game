@@ -21,13 +21,16 @@ public class GhostEnemy : MonoBehaviour
     [SerializeField] private Sprite attackSprite;
     [SerializeField] private LayerMask wallMask;
 
-    [Header("Attack")]
-    [SerializeField] private float detectionRange = 7f;
-    [SerializeField] private float aimTime = 0.6f;
-    [SerializeField] private float fireTime = 0.1f;
-    [SerializeField] private float cooldownTime = 1.5f;
-    [SerializeField] private float projectileSpeed = 5f;
-    [SerializeField] private int damage = 1;
+
+    [Header("Enemy Data")]
+    [SerializeField] private EnemyStats stats;
+
+    private float detectionRange => stats.detectionRange;
+    private float aimTime => stats.aimTime;
+    private float fireTime => stats.fireTime;
+    private float cooldownTime => stats.cooldownTime;
+    private float projectileSpeed => stats.projectileSpeed;
+    private int damage => stats.damage;
 
     private State state;
     private float stateTimer;
@@ -37,6 +40,14 @@ public class GhostEnemy : MonoBehaviour
 
     private void Awake()
     {
+
+        if (stats == null)
+        {
+            Debug.LogError("Ghost Stats is not assigned!", this);
+            enabled = false;
+            return;
+        }
+
         if (spriteRenderer != null)
             normalColor = spriteRenderer.color;
     }
@@ -209,4 +220,10 @@ public class GhostEnemy : MonoBehaviour
 
         Debug.Log("Ghost State: " + state);
     }
+
+    public void SetPlayer(Transform target)
+    {
+        player = target;
+    }
+
 }
