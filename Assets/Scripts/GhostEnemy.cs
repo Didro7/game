@@ -93,9 +93,7 @@ public class GhostEnemy : MonoBehaviour
                 {
                     hasFired = true;
 
-                    // Aim direction was locked at the start of Aim.
-                    // Do not cancel an already-telegraphed shot just
-                    // because the player moved during the warning.
+                   
                     if (IsOnScreen())
                         Shoot();
                 }
@@ -193,6 +191,12 @@ public class GhostEnemy : MonoBehaviour
 
     private void ChangeState(State next)
     {
+
+        if (next == State.Aim)
+        {
+            GameSfxManager.Instance?.PlayGhostWarning();
+        }
+
         state = next;
         stateTimer = 0f;
 

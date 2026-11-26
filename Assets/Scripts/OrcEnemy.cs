@@ -233,6 +233,12 @@ public class OrcEnemy : MonoBehaviour
 
     private void ChangeState(State next)
     {
+
+        if (next == State.WindUp)
+        {
+            GameSfxManager.Instance?.PlayOrcWarning();
+        }
+
         currentState = next;
         stateTimer = 0f;
 

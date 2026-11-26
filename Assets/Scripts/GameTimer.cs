@@ -59,6 +59,9 @@ public class GameTimer : MonoBehaviour
 
     private void TimeUp()
     {
+
+        GameSfxManager.Instance?.PlayLose();
+
         Debug.Log("TIME IS UP!");
 
         if (gameOverPanel != null)

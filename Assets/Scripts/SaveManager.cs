@@ -28,8 +28,6 @@ public class SaveManager : MonoBehaviour
     {
         Data = SaveSystem.Load();
 
-        AudioListener.volume =
-            Mathf.Clamp01(Data.musicVolume);
     }
 
     public void CompleteLevel(

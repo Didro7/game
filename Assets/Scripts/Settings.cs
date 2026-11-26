@@ -1,21 +1,23 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class Settings : MonoBehaviour
 {
-    [Header("Settings UI")]
+    [Header("UI")]
     [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
+    [Header("Mixer")]
+    [SerializeField] private AudioMixer gameMixer;
 
     private SaveData data;
 
     private void Start()
     {
-        data = SaveSystem.Load();
-
-        AudioListener.volume =
-            Mathf.Clamp01(data.musicVolume);
+        ApplySavedVolumes();
 
         if (settingsPanel != null)
             settingsPanel.SetActive(false);
@@ -23,17 +25,7 @@ public class Settings : MonoBehaviour
 
     public void OpenSettings()
     {
-        data = SaveSystem.Load();
-
-        if (volumeSlider != null)
-        {
-            volumeSlider.SetValueWithoutNotify(
-                Mathf.Clamp01(data.musicVolume)
-            );
-        }
-
-        AudioListener.volume =
-            Mathf.Clamp01(data.musicVolume);
+        ApplySavedVolumes();
 
         if (settingsPanel != null)
             settingsPanel.SetActive(true);
@@ -45,19 +37,65 @@ public class Settings : MonoBehaviour
             settingsPanel.SetActive(false);
     }
 
-    public void ChangeVolume(float value)
+    public void ApplySavedVolumes()
+    {
+        data = SaveSystem.Load();
+
+        if (musicSlider != null)
+            musicSlider.SetValueWithoutNotify(
+                data.musicVolume
+            );
+
+        if (sfxSlider != null)
+            sfxSlider.SetValueWithoutNotify(
+                data.sfxVolume
+            );
+
+        SetMixerVolume("MusicVol", data.musicVolume);
+        SetMixerVolume("SFXVol", data.sfxVolume);
+    }
+
+    public void ChangeMusicVolume(float value)
     {
         if (data == null)
             data = SaveSystem.Load();
 
         data.musicVolume = Mathf.Clamp01(value);
 
-        AudioListener.volume = data.musicVolume;
+        SetMixerVolume(
+            "MusicVol",
+            data.musicVolume
+        );
 
         SaveSystem.Save(data);
+    }
 
-        Debug.Log(
-            "Volume saved: " + data.musicVolume
+    public void ChangeSfxVolume(float value)
+    {
+        if (data == null)
+            data = SaveSystem.Load();
+
+        data.sfxVolume = Mathf.Clamp01(value);
+
+        SetMixerVolume(
+            "SFXVol",
+            data.sfxVolume
         );
+
+        SaveSystem.Save(data);
+    }
+
+    private void SetMixerVolume(
+        string parameter,
+        float value)
+    {
+        if (gameMixer == null)
+            return;
+
+        float db = Mathf.Log10(
+            Mathf.Max(value, 0.0001f)
+        ) * 20f;
+
+        gameMixer.SetFloat(parameter, db);
     }
 }

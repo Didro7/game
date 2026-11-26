@@ -321,6 +321,12 @@ public class GoblinPatrol : MonoBehaviour
 
     private void ChangeState(State next)
     {
+
+        if (next == State.WindUp)
+        {
+            GameSfxManager.Instance?.PlayGoblinWarning();
+        }
+
         currentState = next;
         stateTimer = 0f;
         animationTimer = 0f;

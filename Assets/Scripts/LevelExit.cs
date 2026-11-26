@@ -51,6 +51,9 @@ public class LevelExit : MonoBehaviour
 
         completed = true;
 
+        GameSfxManager.Instance?.PlayWin();
+
+
         if (gameTimer != null)
             gameTimer.StopTimer();
 

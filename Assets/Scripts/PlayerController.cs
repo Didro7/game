@@ -131,6 +131,9 @@ public class PlayerController : MonoBehaviour
                 rb.linearVelocity.x,
                 jumpForce
             );
+
+            GameSfxManager.Instance?.PlayJump();
+
         }
     }
 

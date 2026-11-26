@@ -55,6 +55,12 @@ public static class SaveSystem
             SaveData data =
                 JsonUtility.FromJson<SaveData>(json);
 
+            if (!json.Contains("\"sfxVolume\""))
+            {
+                data.sfxVolume = 1f;
+            }
+
+
             if (data == null ||
                 data.version != 1 ||
                 data.unlockedLevels == null ||

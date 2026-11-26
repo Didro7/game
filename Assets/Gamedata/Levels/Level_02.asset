@@ -16,12 +16,12 @@ MonoBehaviour:
   timeLimit: 60
   goal: 0
   goalAmount: 0
-  environmentPrefab: {fileID: 2500188402456046746, guid: fe23d214875e6024eb469ab982e5cf4d, type: 3}
+  environmentPrefab: {fileID: 2500188402456046746, guid: 25b1d85d6dacbbc45b1a9f803b57799c, type: 3}
   playerSpawnPoint: {x: -5.43, y: -2.87}
   exitPosition: {x: 66.8, y: -2.9}
   spawnPoints:
-  - {x: 0.941, y: 0.37}
-  - {x: 5.27, y: 9.39}
+  - {x: 0.94, y: 0.37}
+  - {x: 27, y: 4}
   - {x: 28.04, y: 0.4}
   waves:
   - enemyPrefab: {fileID: 6220756438198625401, guid: 46aa89f3c4c678f449595e77950435d1, type: 3}

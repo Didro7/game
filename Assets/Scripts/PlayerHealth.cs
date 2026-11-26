@@ -74,6 +74,9 @@ private float flashInterval => stats.flashInterval;
             0, currentHealth - damage
         );
 
+        GameSfxManager.Instance?.PlayHit();
+
+
         nextDamageTime =
             Time.time + invincibilityTime;
 
@@ -149,6 +152,10 @@ private float flashInterval => stats.flashInterval;
     private void Die()
     {
         isDead = true;
+
+        GameSfxManager.Instance?.PlayDeath();
+        GameSfxManager.Instance?.PlayLose();
+
 
         Debug.Log("GAME OVER");
 

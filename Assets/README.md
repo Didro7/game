@@ -14,3 +14,25 @@ Phone Playtest and Tuning — Complete After Testing
 
 AI Use Declaration
 I used ChatGPT for code suggestions, debugging, sprite preparation, and explanations. I manually made the changes and tested the game in Unity. I did not use an automated coding agent to edit the Unity project.
+
+Assignment 12 - Sound Pass
+
+
+Adventure Time is a 2D platformer with two playable levels.
+
+The game uses a Unity AudioMixer with Master, Music, SFX, and Tracks groups. It includes sound effects for player actions, collecting coins, enemy attack warnings, UI interactions, winning, and losing.
+
+MusicManager controls two tracks: one for the main menu and one for gameplay.
+Settings allows the player to control Music and SFX volume independently. SaveSystem stores these settings in JSON.
+The pause system uses a Paused AudioMixer snapshot to make the music quieter and muffled.
+
+Main Scripts
+
+GameSfxManager.cs - gameplay sound effects.
+GameSounds.cs - original coin sound handler.
+MusicManager.cs - music playback and crossfade.
+SceneMusic.cs - chooses music for each scene.
+Settings.cs - Music and SFX volume controls.
+PauseAudio.cs - mixer snapshots.
+SaveSystem.cs - persistent JSON settings.
+LevelLoader.cs - loads level data, enemies, and environments.

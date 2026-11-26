@@ -10,9 +10,10 @@ public class SaveData
     public int bestScore = 0;
     public int totalCoins = 0;
 
-    public List<int> unlockedLevels =
-        new List<int> { 1 };
+    public List<int> unlockedLevels = new List<int> { 1 };
 
     public float musicVolume = 1f;
+    public float sfxVolume = 1f;
+
     public bool vibration = true;
 }
